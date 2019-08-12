@@ -87,7 +87,15 @@ function afterConnection() {
       console.log(item_quantity_input)
       updated_quantity = inventory - item_quantity_input
       console.log(updated_quantity)
-    connection.query("UPDATE products SET stock_quantity ? WHERE item_id ? ;", [updated_quantity], [item_id_input], function(err, res) {
+    connection.query("UPDATE products SET ? WHERE ?",
+    [
+      {
+        stock_quantity: updated_quantity
+      },
+      {
+        item_id: item_id_input
+      }
+    ], function(err, res) {
         if (err) throw err;
         console.log("You have succesfully purchased this item!")
         console.table(res);
